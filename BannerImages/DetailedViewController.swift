@@ -17,7 +17,6 @@ class DetailedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        imagePath = "http://kaleidosblog.com/tutorial/img/photo-1441906363162-903afd0d3d52.jpg"
         
         let url = URL(string: imagePath)
         

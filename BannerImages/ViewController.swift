@@ -25,9 +25,16 @@ class ViewController: UIViewController {
             layout.itemSpace = 10
             layout.itemSize = self.collection.frame.insetBy(dx: 40, dy: 40).size
         }
-        (collection.collectionViewLayout as? MMBannerLayout)?.autoPlayStatus = .play(duration: 2.0)
+
+        
+        
 
         get_Images()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        (collection.collectionViewLayout as? MMBannerLayout)?.autoPlayStatus = .play(duration: 2.0)
     }
     
     func get_Images()
@@ -92,6 +99,34 @@ class ViewController: UIViewController {
         self.collection.reloadData()
     }
     
+//    func tap(sender: UITapGestureRecognizer){
+//        
+//        
+//        if let indexPath = collection?.indexPathForItem(at: sender.location(in: collection)) {
+//            let cell = self.collection?.cellForItem(at: indexPath)
+//            print("you can do something with the cell or index path here")
+//            (collection.collectionViewLayout as? MMBannerLayout)?.autoPlayStatus = .none
+//
+//        } else {
+//            
+//                    let detailViewObj = self.storyboard!.instantiateViewController(withIdentifier: "detailedVC") as! DetailedViewController
+//                    detailViewObj.imagePath = images[indexPath]
+//                    self.navigationController!.pushViewController(detailViewObj, animated: true)        }
+//    }
+//    
+    
+    
+    func processDoubleTap (sender: UITapGestureRecognizer)
+    {
+        
+        let point:CGPoint = sender.location(in: collection)
+        let indelPath:NSIndexPath = collection.indexPathForItem(at: point)! as NSIndexPath
+        print(indelPath)
+        
+        let detailViewObj = self.storyboard!.instantiateViewController(withIdentifier: "detailedVC") as! DetailedViewController
+        detailViewObj.imagePath = images[indelPath.row]
+        self.navigationController!.pushViewController(detailViewObj, animated: true)
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -144,16 +179,20 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
+
+        
+//            print("You selected cell #\(indexPath)!")
+//            print("You selected cell #\(images[indexPath.row])")
+//        
         (collection.collectionViewLayout as? MMBannerLayout)?.autoPlayStatus = .none
-
-            print("You selected cell #\(indexPath)!")
-            print("You selected cell #\(images[indexPath.row])")
-        
-        
-
-        let detailViewObj = self.storyboard!.instantiateViewController(withIdentifier: "detailedVC") as! DetailedViewController
-        detailViewObj.imagePath = images[indexPath.row]
-        self.navigationController!.pushViewController(detailViewObj, animated: true)
+//
+//
+//        let detailViewObj = self.storyboard!.instantiateViewController(withIdentifier: "detailedVC") as! DetailedViewController
+//        detailViewObj.imagePath = images[indexPath.row]
+//        self.navigationController!.pushViewController(detailViewObj, animated: true)
+        let doubletapgesture : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action:#selector(processDoubleTap))
+        doubletapgesture.numberOfTapsRequired = 2
+        collectionView.addGestureRecognizer(doubletapgesture)
         
     }
 
