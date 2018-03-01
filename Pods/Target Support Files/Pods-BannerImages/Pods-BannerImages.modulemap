@@ -1,0 +1,6 @@
+framework module Pods_BannerImages {
+  umbrella header "Pods-BannerImages-umbrella.h"
+
+  export *
+  module * { export * }
+}
